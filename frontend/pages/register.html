@@ -33,9 +33,9 @@
               <a class="nav-link" href="#">Logout</a>
             </li>
 
-            <li class="nav-item">
-              <a class=" btn btn-primary" id="loginDropdown" href="./pages/login.html">Login/Register</a>
-            </li>
+            <!-- <li class="nav-item"> -->
+            <!--   <a class=" btn btn-primary" id="loginDropdown" href="./pages/login.html">Login/Register</a> -->
+            <!-- </li> -->
           </ul>
         </div>
 
@@ -70,6 +70,14 @@
               <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="department">Department:</label>
+                <select class="form-control" id="department" name="department" required></select>
               </div>
               <input type="hidden" name="register" value="1">
               <button type="submit" class="btn btn-primary py-2 px-4"  name="register">Register</button>
