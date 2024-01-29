@@ -11,7 +11,7 @@
           success: function (response) {
             // Update content based on session status
             if (response.loggedIn) {
-              $('#session-container').html('<a href="#" id="logout"> '+  response.userDetails.username.toUpperCase() + '</a>');
+              $('#session-container').html('<a href="/db_2/frontend/index.html" id="logout"> '+  response.userDetails.username.toUpperCase() + '</a>');
               $('#login-register-container').hide();
               $('#loginDropdown').hide();
             } else {
@@ -33,7 +33,7 @@
           success: function (data) {
             console.log(data); // Log the response for debugging
             // After registration, re-check the session status
-            document.location.href='./index.html';
+            document.location.href='/db_2/frontend/index.html';
             checkSessionStatus();
 
 
@@ -50,7 +50,7 @@
           success: function (data) {
             console.log(data); // Log the response for debugging
             // After login, re-check the session status
-            document.location.href='./index.html';
+            document.location.href='/db_2/frontend/index.html';
             checkSessionStatus();
           }
         });
@@ -65,7 +65,7 @@
           success: function (data) {
             console.log(data); // Log the response for debugging
             // After logout, re-check the session status
-            document.location.href='./index.html';
+            document.location.href='/db_2/frontend/index.html';
             checkSessionStatus();
           }
         });
