@@ -137,3 +137,60 @@ $(document).ready(function () {
   fetchDepartments();
 });
 
+
+
+
+
+// chats
+//
+// Función para cargar dinámicamente los cursos
+function loadCourses() {
+  $.ajax({
+    url: '/db_2/backend/test_cursos.php', // Cambia esto al nombre de tu script PHP que obtiene los cursos
+    type: 'GET',
+    success: function(data) {
+      $('#course').html(data);
+    }
+  });
+}
+
+// Función para cargar el contenido del chat
+function loadChat() {
+  var selectedCourse = $('#course').val();
+  if (selectedCourse) {
+    // Ocultar el área de selección y mostrar el área del chat
+    $('#courseSelection').hide();
+    $('#chatContainer').show();
+
+    // Establecer el valor del campo oculto con el ID del curso seleccionado
+    $('#courseID').val(selectedCourse);
+
+    // Cargar los posts del chat
+    loadChatPosts(selectedCourse);
+  } else {
+    alert('Por favor, selecciona un curso antes de ingresar al chat.');
+  }
+}
+
+// Función para cargar los posts del chat desde el servidor
+function loadChatPosts(courseID) {
+  $.ajax({
+    url: '/db_2/backend/get_posts.php', // Cambia esto al nombre de tu script PHP que obtiene los posts
+    type: 'GET',
+    data: { courseID: courseID },
+    success: function(data) {
+      $('#chatContent').html(data);
+    }
+  });
+}
+
+// Función para enviar mensajes del chat
+function sendChatMessage() {
+  // ... código adicional para enviar mensajes del chat usando AJAX ...
+}
+
+// Cargar cursos al cargar la página
+$(document).ready(function() {
+  loadCourses();
+});
+
