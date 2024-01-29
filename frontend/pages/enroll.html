@@ -1,16 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
+    <title>Inscripción en Cursos</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="../css/style.css" rel="stylesheet">
 </head>
   <body class="d-flex flex-column min-vh-100">
-
-
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="../index.html">
@@ -28,7 +25,7 @@
               <a class="nav-link" href="#">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./enroll.html">Cursos</a>
+              <a class="nav-link" href="./enroll.html">Inscripcion</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="./chat.html">Chat</a>
@@ -56,24 +53,14 @@
 
     </header>
 
-    <h1>Selecciona un Curso para el Chat</h1>
+
+
+    <h1>Inscripción en Cursos</h1>
 
     <div id="courseSelection">
         <label for="course">Cursos Disponibles:</label>
         <select name="course" id="course"></select>
-        <button onclick="loadChat()">Ingresar al Chat</button>
-    </div>
-
-    <div id="chatContainer" style="display:none;">
-        <!-- Aquí puedes mostrar el contenido del chat -->
-        <h2>Chat Content Goes Here</h2>
-        <div id="chatContent"></div>
-        <form id="chatForm">
-            <!-- Agrega un campo oculto para almacenar el ID del curso -->
-            <input type="hidden" id="courseID" name="courseID" value="">
-            <textarea name="content" id="content" placeholder="Escribe tu mensaje"></textarea>
-            <button type="button" onclick="sendChatMessage()">Enviar Mensaje</button>
-        </form>
+        <button onclick="enroll()">Inscribirse</button>
     </div>
 
 
@@ -83,16 +70,52 @@
       </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Función para cargar dinámicamente los cursos
+        function loadCourses() {
+            $.ajax({
+                url: '/db_2/backend/get_courses.php', // Ruta al script PHP que obtiene los cursos
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Llenar el select con la lista de cursos
+                    var select = $('#course');
+                    $.each(data, function(index, course) {
+                        select.append($('<option>', {
+                            value: course.id,
+                            text: course.name
+                        }));
+                    });
+                }
+            });
+        }
 
-    <!-- ajax -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        // Función para realizar la inscripción
+        function enroll() {
+            var selectedCourse = $('#course').val();
 
-    <script src="../js/ajax.js">
+            if (selectedCourse) {
+                // Realizar la inscripción
+                $.ajax({
+                    url: '/db_2/backend/enroll.php', // Ruta al script PHP que maneja la inscripción
+                    type: 'POST',
+                    data: { enroll: true, courses: [selectedCourse] },
+                    success: function(response) {
+                        alert(response);
+                        // Puedes redirigir al estudiante al chat o a la página principal después de la inscripción.
+                        // window.location.href = '/chat.html?course=' + selectedCourse;
+                    }
+                });
+            } else {
+                alert('Por favor, selecciona un curso antes de inscribirte.');
+            }
+        }
+
+        // Cargar cursos al cargar la página
+        $(document).ready(function() {
+            loadCourses();
+        });
     </script>
 
 </body>
 </html>
-
