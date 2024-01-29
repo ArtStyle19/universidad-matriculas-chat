@@ -88,7 +88,7 @@
       // Function to check session status
       function checkSessionStatus() {
         $.ajax({
-          url: '../../backend/check_session.php', // PHP file that checks session status
+          url: '../backend/check_session.php', // PHP file that checks session status
           type: 'GET',
           dataType: 'json', // Expect JSON response
           success: function (response) {
@@ -110,7 +110,7 @@
       $('#register-form').submit(function (event) {
         event.preventDefault();
         $.ajax({
-          url: '../../backend/register.php',
+          url: '../backend/register.php',
           type: 'POST',
           data: $(this).serialize(),
           success: function (data) {
@@ -127,7 +127,7 @@
       $('#login-form').submit(function (event) {
         event.preventDefault();
         $.ajax({
-          url: '../../backend/login.php',
+          url: '../backend/login.php',
           type: 'POST',
           data: $(this).serialize(),
           success: function (data) {
@@ -143,7 +143,7 @@
       $(document).on('click', '#logout', function (event) {
         event.preventDefault();
         $.ajax({
-          url: '../../backend/logout.php',
+          url: '../backend/logout.php',
           type: 'GET',
           success: function (data) {
             console.log(data); // Log the response for debugging
