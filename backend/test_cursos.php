@@ -2,33 +2,34 @@
 session_start();
 require("conexion.php");
 
-// Obtener el ID del departamento del estudiante actual
-$username = $_SESSION['user']; // Asumiendo que 'user' almacena el nombre de usuario del estudiante
-$departmentQuery = "SELECT DepartmentID FROM Students WHERE Username = ?";
-$stmtDept = $conn->prepare($departmentQuery);
-$stmtDept->bind_param("s", $username);
-$stmtDept->execute();
-$resultDept = $stmtDept->get_result();
-$rowDept = $resultDept->fetch_assoc();
-$departmentID = $rowDept['DepartmentID'];
+// Obtener el ID del estudiante actual
+$username = $_SESSION['user'];
+$getStudentIDQuery = "SELECT StudentID FROM Students WHERE Username = ?";
+$stmtStudentID = $conn->prepare($getStudentIDQuery);
+$stmtStudentID->bind_param("s", $username);
+$stmtStudentID->execute();
+$resultStudentID = $stmtStudentID->get_result();
+$rowStudentID = $resultStudentID->fetch_assoc();
+$studentID = $rowStudentID['StudentID'];
 
-// Obtener cursos disponibles para el departamento del estudiante
-$availableCoursesQuery = "SELECT * FROM Courses WHERE DepartmentID = ?";
-$stmtCourses = $conn->prepare($availableCoursesQuery);
-$stmtCourses->bind_param("i", $departmentID);
-$stmtCourses->execute();
-$resultCourses = $stmtCourses->get_result();
+// Obtener cursos a los que está inscrito el estudiante
+$enrolledCoursesQuery = "SELECT c.CourseID, c.CourseName FROM Courses c 
+                        INNER JOIN Enrollments e ON c.CourseID = e.CourseID
+                        WHERE e.StudentID = ?";
+$stmtEnrolledCourses = $conn->prepare($enrolledCoursesQuery);
+$stmtEnrolledCourses->bind_param("i", $studentID);
+$stmtEnrolledCourses->execute();
+$resultEnrolledCourses = $stmtEnrolledCourses->get_result();
 
 // Construir opciones de cursos para la respuesta AJAX
 $options = "";
-while ($rowCourse = $resultCourses->fetch_assoc()) {
-    $options .= '<option value="' . $rowCourse['CourseID'] . '">' . $rowCourse['CourseName'] . '</option>';
+while ($rowEnrolledCourse = $resultEnrolledCourses->fetch_assoc()) {
+    $options .= '<option value="' . $rowEnrolledCourse['CourseID'] . '">' . $rowEnrolledCourse['CourseName'] . '</option>';
 }
 
-$stmtDept->close();
-$stmtCourses->close();
+$stmtStudentID->close();
+$stmtEnrolledCourses->close();
 $conn->close();
 
 echo $options;
 ?>
-
