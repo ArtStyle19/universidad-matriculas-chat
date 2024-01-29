@@ -9,7 +9,7 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to the home page or login page
-header("Location: index.html"); // Change this to the appropriate URL
+// header("Location: index.html"); // Change this to the appropriate URL
 exit();
 ?>
 
