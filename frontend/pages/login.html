@@ -30,7 +30,18 @@
               <a class="nav-link" href="#">Cursos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Logout</a>
+              <a class="nav-link" href="#">Chat</a>
+            </li>
+            <li class="nav-item">
+
+              <div class="nav-item" id="session-container">
+                <div class="row">
+                  <div class="col-md-12">
+
+                    <!-- Session content will be loaded here dynamically -->
+                  </div>
+                </div>
+              </div>
             </li>
 
             <!-- <li class="nav-item"> -->
@@ -39,14 +50,6 @@
           </ul>
         </div>
 
-        <div class="nav-item" id="session-container">
-          <div class="row">
-            <div class="col-md-12">
-
-              <!-- Session content will be loaded here dynamically -->
-            </div>
-          </div>
-        </div>
 
       </nav>
 
@@ -65,12 +68,12 @@
             <h2>Login</h2>
             <form id="login-form">
               <div class="form-group">
-                <label for="loginUsername">Username:</label>
-                <input type="text" class="form-control" id="loginUsername" name="loginUsername" required>
+                <label for="loginemail">Email:</label>
+                <input type="email" class="form-control" id="loginEmail" name="loginEmail" placeholder="Correo Electronico" required>
               </div>
               <div class="form-group">
                 <label for="loginPassword">Password:</label>
-                <input type="password" class="form-control" id="loginPassword" name="loginPassword" required>
+                <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
               </div>
               <input type="hidden" name="login" value="1">
               <button type="submit" class="btn btn-primary py-2 px-4" name="login">Login</button>
@@ -78,6 +81,7 @@
 
             <p>Don't have an account? <a href="register.html">Register</a></p>
           </div>
+
         </div>
       </div>
 
