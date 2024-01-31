@@ -1,14 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscripción en Cursos</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="../css/style.css" rel="stylesheet">
-</head>
+  </head>
   <body class="d-flex flex-column min-vh-100">
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,7 +22,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="#">Inicio</a>
             </li>
             <li class="nav-item">
@@ -54,14 +53,16 @@
     </header>
 
 
+<section class="container mt-4">
+  <h1 class="mb-4">Inscripción en Cursos</h1>
 
-    <h1>Inscripción en Cursos</h1>
+  <div class="form-group">
+    <label for="dep_courses">Cursos Disponibles:</label>
+    <select class="form-control" id="dep_courses"></select>
+  </div>
 
-    <div id="courseSelection">
-        <label for="course">Cursos Disponibles:</label>
-        <select name="course" id="course"></select>
-        <button onclick="enroll()">Inscribirse</button>
-    </div>
+  <button class="btn btn-success" onclick="enroll()">Inscribirse</button>
+</section>
 
 
     <footer class="footer mt-auto py-3 bg-light">
@@ -70,55 +71,8 @@
       </div>
     </footer>
 
-    <script>
-        // Función para cargar dinámicamente los cursos
-        function loadCourses() {
-            $.ajax({
-                url: '/db_2/backend/get_courses.php', // Ruta al script PHP que obtiene los cursos
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    // Llenar el select con la lista de cursos
-                    var select = $('#course');
-                    $.each(data, function(index, course) {
-                        select.append($('<option>', {
-                            value: course.id,
-                            text: course.name
-                        }));
-                    });
-                }
-            });
-        }
-
-        // Función para realizar la inscripción
-        function enroll() {
-            var selectedCourse = $('#course').val();
-
-            if (selectedCourse) {
-                // Realizar la inscripción
-                $.ajax({
-                    url: '/db_2/backend/enroll.php', // Ruta al script PHP que maneja la inscripción
-                    type: 'POST',
-                    data: { enroll: true, courses: [selectedCourse] },
-                    success: function(response) {
-                        alert(response);
-                        // Puedes redirigir al estudiante al chat o a la página principal después de la inscripción.
-                        // window.location.href = '/chat.html?course=' + selectedCourse;
-                    }
-                });
-            } else {
-                alert('Por favor, selecciona un curso antes de inscribirte.');
-            }
-        }
-
-        // Cargar cursos al cargar la página
-        $(document).ready(function() {
-            loadCourses();
-        });
-    </script>
-
     <script src="../js/ajax.js">
     </script>
 
-</body>
+  </body>
 </html>

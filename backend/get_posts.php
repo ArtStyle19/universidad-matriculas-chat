@@ -13,7 +13,7 @@ if ($courseID === null) {
                       FROM Posts
                       INNER JOIN Students ON Posts.StudentID = Students.StudentID
                       WHERE Posts.CourseID = ?
-                      ORDER BY Posts.Timestamp DESC";
+                      ORDER BY Posts.Timestamp ASC";
 
     $stmt = $conn->prepare($getPostsQuery);
     $stmt->bind_param("i", $courseID);
@@ -22,26 +22,27 @@ if ($courseID === null) {
 
     // Mostrar los posts en formato HTML (puedes personalizar esto según tus necesidades)
 while ($row = $result->fetch_assoc()) {
-    echo "<div class='post' id='post_" . $row['PostID'] . "'>";
-    echo "<strong>" . $row['Username'] . ":</strong> ";
+        echo "<div class='card mb-3' id='post_" . $row['PostID'] . "'>";
+        echo "<div class='card-body'>";
+        echo "<h5 class='card-title'>" . $row['Username'] . ":</h5>";
 
-    // Content element
-    echo "<p class='content'>" . $row['Content'] . "</p>";
+        // Content element
+        echo "<p class='card-text'>" . $row['Content'] . "</p>";
 
-    // Timestamp element
-    echo "<small class='timestamp'>" . $row['Timestamp'] . "</small>";
+        // Timestamp element
+        echo "<small class='text-muted'>" . $row['Timestamp'] . "</small>";
 
-    // Check if the post belongs to the current user
-    if ($_SESSION['user'] == $row['Username']) {
-        // Edit button
-        echo "<button type='button' class='edit-button' onclick='editPost(" . $row['PostID'] . ")'>Editar</button>";
+        // Check if the post belongs to the current user
+        if ($_SESSION['user'] == $row['Username']) {
+            // Edit button
+            echo "<button type='button' class='btn btn-primary edit-button' onclick='editPost(" . $row['PostID'] . ")'>Editar</button>";
 
-        // Delete button
-        echo "<button type='button' class='delete-button' onclick='deletePost(" . $row['PostID'] . ")'>Eliminar</button>";
+            // Delete button
+            echo "<button type='button' class='btn btn-danger delete-button' onclick='deletePost(" . $row['PostID'] . ")'>Eliminar</button>";
+        }
+
+        echo "</div></div>";
     }
-
-    echo "</div>";
-}
 
     $stmt->close();
 }
